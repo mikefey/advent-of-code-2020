@@ -1,5 +1,5 @@
 defmodule AOCDayOne do
-  {:ok, inputs} = File.read("./inputs/day-1.txt") 
+  {:ok, inputs} = File.read("./inputs/day-1.txt")
 
   target_sum = 2020
 

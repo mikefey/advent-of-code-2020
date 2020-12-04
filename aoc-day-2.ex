@@ -1,7 +1,7 @@
 defmodule AOCDayTwo do
-  {:ok, inputs} = File.read("./inputs/day-2.txt") 
+  {:ok, inputs} = File.read("./inputs/day-2.txt")
 
-  input_list =
+  valid_counts =
     inputs
     |> String.trim()
     |> String.split("\n")
@@ -9,9 +9,7 @@ defmodule AOCDayTwo do
       x
       |> String.trim()
     end)
-
-  valid_counts =
-    Enum.reduce(input_list, %{:valid => 0, :invalid => 0}, fn x, acc ->
+    |> Enum.reduce(%{:valid => 0, :invalid => 0}, fn x, acc ->
       split = String.split(x, ":")
       rule = String.trim(Enum.at(split, 0))
       split_rule = String.split(rule, " ")
