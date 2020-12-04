@@ -72,14 +72,14 @@ defmodule AOCDayFour do
           end
 
       valid_hair_color =
-        Map.has_key?(hash, :hcl) && Regex.match?(~r/#+([0-9]|[a-f]){6}/, Map.get(hash, :hcl))
+        Map.has_key?(hash, :hcl) && Regex.match?(~r/[#]+([0-9]|[a-f]){6}/, Map.get(hash, :hcl))
 
       valid_eye_color =
         Map.has_key?(hash, :ecl) &&
           Enum.member?(["amb", "blu", "brn", "gry", "grn", "hzl", "oth"], Map.get(hash, :ecl))
 
       valid_passport =
-        Map.has_key?(hash, :pid) && Regex.match?(~r/([0-9]){9}/, Map.get(hash, :pid))
+        Map.has_key?(hash, :pid) && Regex.match?(~r/^\d{9}$/, Map.get(hash, :pid))
 
       if has_required_fields && valid_birth_year && valid_issue_year && valid_expiration_year &&
            valid_height && valid_hair_color && valid_eye_color && valid_passport,
