@@ -33,4 +33,5 @@ defmodule AOCDayFive do
     end)
 
   sorted_ids = Enum.sort(ids, &(&1 >= &2))
+  IO.inspect Enum.at((Enum.to_list(976..0) -- sorted_ids), 0)
 end
