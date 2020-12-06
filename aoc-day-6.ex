@@ -32,22 +32,22 @@ defmodule AOCDaySix do
           String.split(reference, "")
           |> Enum.reject(fn char -> char == "" end)
 
-        answers_contain_char = Enum.reduce(reference_list, 0, fn char, acc ->
-          matches = Enum.reduce(rest, 0, fn (answer, contains) ->
-            if String.contains?(answer, char), do: contains + 1, else: contains
+        answers_contain_char =
+          Enum.reduce(reference_list, 0, fn char, acc ->
+            matches =
+              Enum.reduce(rest, 0, fn answer, contains ->
+                if String.contains?(answer, char), do: contains + 1, else: contains
+              end)
+
+            if matches == Enum.count(rest), do: acc + 1, else: acc
           end)
 
-          if matches == Enum.count(rest), do: acc + 1, else: acc
-        end)
-        
         answers_contain_char
       end
     end)
-    |> Enum.reduce(0, fn (count, total) ->
+    |> Enum.reduce(0, fn count, total ->
       total + count
     end)
 
-
-
-  IO.inspect counts
+  IO.inspect(counts)
 end
