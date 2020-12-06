@@ -7,12 +7,9 @@ defmodule AOCDaySix do
     |> Enum.chunk_by(fn row ->
       row == ""
     end)
-    |> Enum.reject(fn row ->
-      row == [""]
-    end)
     |> Enum.map(fn line ->
       Enum.map(line, fn item ->
-        String.split(item, " ")
+        String.split(item)
       end)
     end)
     |> Enum.map(fn lines ->
@@ -20,29 +17,36 @@ defmodule AOCDaySix do
         acc ++ items
       end)
     end)
-    |> Enum.map(fn answers ->
-      Enum.reduce(answers, "", fn answer, acc ->
-        "#{acc}#{answer}"
-      end)
+    |> Enum.reject(fn row ->
+      row == []
     end)
     |> Enum.map(fn answers ->
-      String.split(answers, "")
-      |> Enum.reject(fn item ->
-        item == ""
-      end)
-      |> Enum.uniq
-    end) 
-    |> Enum.map(fn answers ->
-      Enum.reduce(answers, "", fn answer, acc ->
-        "#{acc}#{answer}"
-      end)
+      reference = Enum.at(answers, 0)
+
+      if Enum.count(answers) === 1 do
+        String.length(reference)
+      else
+        rest = Enum.take(answers, (Enum.count(answers) - 1) * -1)
+
+        reference_list =
+          String.split(reference, "")
+          |> Enum.reject(fn char -> char == "" end)
+
+        answers_contain_char = Enum.reduce(reference_list, 0, fn char, acc ->
+          matches = Enum.reduce(rest, 0, fn (answer, contains) ->
+            if String.contains?(answer, char), do: contains + 1, else: contains
+          end)
+
+          if matches == Enum.count(rest), do: acc + 1, else: acc
+        end)
+        
+        answers_contain_char
+      end
     end)
-    |> Enum.map(fn answers ->
-      String.length(answers)
+    |> Enum.reduce(0, fn (count, total) ->
+      total + count
     end)
-    |> Enum.reduce(0, fn count, acc ->
-      acc + count
-    end)
+
 
 
   IO.inspect counts
